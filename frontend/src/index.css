@@ -1,0 +1,18 @@
+/* app.css */
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-dbmcustom-bg: #1f1d1d;
+  --color-dbmcustom-bg2: #141414;
+  --color-dbmcustom-panel: #252526;
+  --color-dbmcustom-border: #2f2f2f;
+  --color-dbmcustom-text: #eaeaea;
+  --color-dbmcustom-textMuted: #a6a6a6;
+  --color-dbmcustom-blue: #3274d9;
+  --color-dbmcustom-blue-light: #5794f2;
+  --color-dbmcustom-green: #299c46;
+  --color-dbmcustom-yellow: #f2c96d;
+  --color-dbmcustom-red: #d44a3a;
+}
