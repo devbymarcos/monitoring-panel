@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import App from "@/pages/App.tsx";
-import About from "./pages/About.tsx";
+import Monitor from "./pages/Monitor.tsx";
 import Layout from "./components/Layout.tsx";
 
 createRoot(document.getElementById("root")!).render(
@@ -12,7 +12,7 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<App />} />
-          <Route path="about" element={<About />} />
+          <Route path="monitor" element={<Monitor />} />
         </Route>
       </Routes>
     </BrowserRouter>

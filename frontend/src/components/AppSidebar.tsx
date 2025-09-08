@@ -16,7 +16,7 @@ export const AppSidebar = () => {
           <li>
             <Link
               className="p-4 flex flex-row items-center gap-2 hover:bg-dbmcustom-bg transition-colors duration-300"
-              to="/about"
+              to="/monitor"
             >
               <Binoculars size={16} />
               Monitor
