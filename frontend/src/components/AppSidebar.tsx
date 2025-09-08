@@ -5,7 +5,7 @@ import { Binoculars, ChartArea } from "lucide-react";
 export const AppSidebar = () => {
   return (
     <div className="h-screen w-[250px] fixed bg-dbmcustom-bg2 text-dbmcustom-text">
-      <div className="p-4 border-b border-dbmcustom-border">
+      <div className="h-20 flex  p-4 border-b border-dbmcustom-border">
         <p className="text-dbmcustom-textMuted font-bold flex flex-row items-center gap-2">
           <ChartArea />
           Monitoring Panel
