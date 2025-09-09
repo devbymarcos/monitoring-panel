@@ -11,7 +11,7 @@ import (
 
 func main() {
 	// Endpoint da API
-	http.HandleFunc("/api/hello", api.HelloHandler)
+	http.HandleFunc("/api/monitor", api.HelloHandler)
 
 	// Servir arquivos do React (SPA)
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
