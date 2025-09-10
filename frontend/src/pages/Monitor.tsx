@@ -1,5 +1,5 @@
 import MonitoringItem from "@/components/MonitoringItem";
-import { getStatusHttp } from "@/http/getStatushttp";
+import { getStatusHttp } from "@/http/getStatusHttp";
 import { useEffect, useState } from "react";
 
 export default function Monitor() {
