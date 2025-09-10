@@ -8,7 +8,7 @@ export const AppSidebar = () => {
       <div className="h-20 flex  p-4 border-b border-dbmcustom-border">
         <p className="text-dbmcustom-textMuted font-bold flex flex-row items-center gap-2">
           <ChartArea />
-          Monitoring Panel
+          Monitor
         </p>
       </div>
       <nav>
