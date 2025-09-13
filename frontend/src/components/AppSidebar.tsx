@@ -1,10 +1,13 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Binoculars, ChartArea } from "lucide-react";
 
-export const AppSidebar = () => {
+export const AppSidebar = ({ onsideBar }) => {
   return (
-    <div className="h-screen w-[250px] fixed bg-dbmcustom-bg2 text-dbmcustom-text">
+    <div
+      className={`h-screen ${
+        onsideBar == true ? "-left-[250px]" : "left-0"
+      } fixed w-[250px] bg-dbmcustom-bg2 transition-all text-dbmcustom-text`}
+    >
       <div className="h-20 flex  p-4 border-b border-dbmcustom-border">
         <p className="text-dbmcustom-textMuted font-bold flex flex-row items-center gap-2">
           <ChartArea />
@@ -19,7 +22,7 @@ export const AppSidebar = () => {
               to="/monitor"
             >
               <Binoculars size={16} />
-              Monitor
+              Log monitor
             </Link>
           </li>
         </ul>

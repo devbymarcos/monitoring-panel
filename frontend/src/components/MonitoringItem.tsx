@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { TvMinimal } from "lucide-react";
+import { formatDate } from "@/functions/formatDate";
 
 const MonitoringItem = ({ mdata }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-dbmcustom-bg px-4 py-2 rounded ">
+    <div
+      className={` ${
+        mdata.status === "offline" ? "bg-orange-950" : "bg-dbmcustom-bg"
+      }  px-4 py-2 rounded `}
+    >
       {/* Cabeçalho sempre visível */}
       <div
         className="flex items-center gap-2 cursor-pointer"
@@ -51,7 +56,7 @@ const MonitoringItem = ({ mdata }) => {
           <strong>Status:</strong> {mdata.status}
         </p>
         <p>
-          <strong>Última mudança:</strong> {mdata.ultima_mudanca}
+          <strong>Última mudança:</strong> {formatDate(mdata.ultima_mudanca)}
         </p>
         <p>
           <strong>IP:</strong> {mdata.ip}

@@ -8,6 +8,10 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
+  build: {
+    outDir: "../backend/build",
+    assetsDir: "assets",
+  },
   plugins: [react(), tailwindcss()].filter(Boolean),
   resolve: {
     alias: {
