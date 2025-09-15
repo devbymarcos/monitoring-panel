@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function Monitor() {
   const [data, setData] = useState([]);
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(5);
   const m = Array.from({ length: 12 });
 
   const runStatus = async () => {
@@ -14,16 +14,17 @@ export default function Monitor() {
   };
 
   useEffect(() => {
+    runStatus();
     const intervalId = setInterval(() => {
       runStatus();
-    }, 10000);
+    },5000);
     // Limpa o intervalo quando o componente é desmontado
     return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
     const countdownId = setInterval(() => {
-      setCountdown((prev) => (prev <= 1 ? 10 : prev - 1));
+      setCountdown((prev) => (prev <= 1 ? 5 : prev - 1));
     }, 1000);
     return () => clearInterval(countdownId);
   }, []);
