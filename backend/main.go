@@ -1,15 +1,15 @@
 package main
 
 import (
+	// variáveis de ambiente
 	"net/http"
 
-	"github.com/joho/godotenv"     // variáveis de ambiente
 	"github.com/kardianos/service" // rodar como serviço Windows
 	"github.com/rs/zerolog/log"
 
 	"os"
-	"path/filepath"
 
+	"github.com/devbymarcos/painel-monitoramento/internal/config"
 	"github.com/devbymarcos/painel-monitoramento/internal/server"
 	"github.com/devbymarcos/painel-monitoramento/internal/utils"
 )
@@ -26,17 +26,18 @@ func (p *program) Start(s service.Service) error {
 }
 
 func (p *program) run() {
-	// Carregar variáveis de ambiente sempre do diretório do executável
+	// execDir não é mais usado para carregar config.json diretamente aqui, mas sim em LoadConfig
+	// execDir ainda é necessário para server.SetupServer e caminhos relativos.
 	execDir := utils.GetExecDir()
-	_ = godotenv.Load(filepath.Join(execDir, ".env"))
 
-	appMode := os.Getenv("APP_MODE") // debug | production
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Erro ao carregar configurações")
 	}
 
-	handler := server.SetupServer(execDir, appMode, port)
+	port := cfg.Port
+
+	handler := server.SetupServer(execDir, cfg)
 
 	if err := http.ListenAndServe(":"+port, handler); err != nil {
 		log.Fatal().Err(err).Msg("Erro ao iniciar servidor")
@@ -53,10 +54,14 @@ func (p *program) Stop(s service.Service) error {
 //
 
 func main() {
-	// Carregar APP_MODE logo no início
-	execDir := utils.GetExecDir()
-	_ = godotenv.Load(filepath.Join(execDir, ".env"))
-	appMode := os.Getenv("APP_MODE")
+	// execDir não é mais usado para carregar config.json diretamente aqui, mas sim em LoadConfig
+	// execDir ainda é necessário para outras operações, como o serviço.
+
+
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		log.Fatal().Err(err).Msg("Erro ao carregar configurações")
+	}
 
 	svcConfig := &service.Config{
 		Name:        "MonitorWork",  // nome interno (sc query PainelDbm)
@@ -71,7 +76,7 @@ func main() {
 	}
 
 	// Se APP_MODE=debug → roda direto no console
-	if appMode == "debug" {
+	if cfg.AppMode == "debug" {
 		log.Info().Msg("Rodando em modo console (debug)")
 		prg.run()
 		return

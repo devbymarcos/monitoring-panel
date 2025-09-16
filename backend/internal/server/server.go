@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/devbymarcos/painel-monitoramento/internal/api"
+	"github.com/devbymarcos/painel-monitoramento/internal/config"
 	"github.com/devbymarcos/painel-monitoramento/internal/middleware"
 
 	"github.com/rs/zerolog"
@@ -14,20 +15,20 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-func SetupServer(execDir, appMode, port string) http.Handler {
+func SetupServer(execDir string, cfg *config.Config) http.Handler {
 	// Configuração de logs
 	var writer io.Writer
-	if appMode == "production" {
+	if cfg.AppMode == "production" {
 		logDir := filepath.Join(execDir, "Log")
 		_ = os.MkdirAll(logDir, os.ModePerm)
 
 		// Logs em JSON com rotação
 		writer = &lumberjack.Logger{
-			Filename:   filepath.Join(logDir, "app.log"),
-			MaxSize:    10, // MB
-			MaxBackups: 5,
-			MaxAge:     30,   // dias
-			Compress:   true, // compacta logs antigos
+			Filename:   filepath.Join(execDir, cfg.LogFile),
+			MaxSize:    cfg.LogMaxSize, // MB
+			MaxBackups: cfg.LogMaxBackups,
+			MaxAge:     cfg.LogMaxAge,   // dias
+			Compress:   cfg.LogCompress, // compacta logs antigos
 		}
 	} else {
 		// Logs legíveis no console (debug)
@@ -58,7 +59,7 @@ func SetupServer(execDir, appMode, port string) http.Handler {
 	// Encadear middlewares
 	handler := middleware.CorsMiddleware(middleware.LoggingMiddleware(http.DefaultServeMux))
 
-	log.Info().Msgf("Servidor rodando em http://localhost:%s (modo: %s)", port, appMode)
+	log.Info().Msgf("Servidor rodando em http://localhost:%s (modo: %s)", cfg.Port, cfg.AppMode)
 	// The server will be started in the run function.
 	return handler
 }

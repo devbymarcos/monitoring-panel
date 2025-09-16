@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 )
 
-// Retorna o diretório onde o executável está rodando
+// GetExecDir retorna o diretório onde o executável está rodando
 func GetExecDir() string {
 	execPath, err := os.Executable()
 	if err != nil {
